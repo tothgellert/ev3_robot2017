@@ -5,10 +5,11 @@ import hu.tothgellert.ev3.kozos.billentyu.BillentyuEsemenyFigyelo;
 import hu.tothgellert.ev3.kozos.billentyu.BillentyuKezelo;
 import hu.tothgellert.ev3.kozos.billentyu.BillentyuSzin;
 import hu.tothgellert.ev3.robot2017.AbsztraktEtap;
+import hu.tothgellert.ev3.robot2017.Kijelzo;
+import lejos.hardware.BrickFinder;
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
-import lejos.utility.Delay;
 
 public class EtapFuttato implements BillentyuEsemenyFigyelo {
 	public EtapFuttato() {
@@ -16,9 +17,10 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 
 	public void futtat( Runnable etap ) {
 		try {
+			BillentyuKezelo.figyelotHozzaad( this );
 			elokeszit( etap );
 			tenylegesFuttatas( etap );
-			lezar();
+			befejez();
 		} finally {
 			BillentyuKezelo.figyelotElvesz();
 		}
@@ -26,38 +28,37 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 
 	private void tenylegesFuttatas( Runnable etap ) {
 		try {
-			//etap.run();
-			etapUzenet( "etap fut..." );
-			Delay.msDelay( 10000 );
+			etap.run();
 		} catch ( EtapMegszakitvaException e ) {
 		} finally {
 		}
 	}
 
-	private void lezar() {
-		LCD.clear( 7 );
+	private void befejez() {
+		LCD.clear( 5 );
 		LCD.refresh();
 	}
 
 	private void elokeszit( Runnable etap ) {
 		Sound.beep();
-		BillentyuKezelo.figyelotHozzaad( this );
 		AbsztraktEtap.etapInditas();
-		etapUzenet( etap.getClass().getSimpleName() );
-		LCD.asyncRefresh();
 		Button.LEDPattern( BillentyuSzin.SARGA_NORMAL );
 	}
 
-	public static void etapUzenet( String uzenet ) {
-		LCD.clear( 5 );
-		LCD.drawString( uzenet, 0, 5 );
-		LCD.asyncRefresh();
+	@Override
+	public void billentyuLenyomasKezelese( BillentyuEsemeny esemeny ) {
+		//billentyuEsemenytKiir( esemeny );
+		if ( esemeny.escapeLenyomva() ) {
+			AbsztraktEtap.etapMegszakitasKerese();
+		}
 	}
 
-	@Override
-	public void billentyuLenyomva( BillentyuEsemeny esemeny ) {
-		if ( (esemeny.getBillentyuLenyomva() & Button.ID_ESCAPE) != 0 ) {
-			AbsztraktEtap.etapMegszakitva();
-		}
+	@SuppressWarnings( "unused" )
+	private void billentyuEsemenytKiir( BillentyuEsemeny esemeny ) {
+		int xPozicio = LCD.DISPLAY_CHAR_WIDTH - 3;
+		// hibas a metódus: LCD.clear( xPozicio, Kijelzo.SOR_FOCIM, 3 );
+		BrickFinder.getDefault().getTextLCD().clear( xPozicio, Kijelzo.SOR_FOCIM, 3 );
+		LCD.drawInt( esemeny.getBillentyuLenyomva(), xPozicio, Kijelzo.SOR_FOCIM );
+		LCD.refresh();
 	}
 }

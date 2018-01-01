@@ -9,6 +9,8 @@ class GurigaEsBehuz extends AbsztraktEtap {
 
 	@Override
 	public void run() {
+		allapotKiiras();
+
 		elindul();
 		karokKi();
 		varAmigMozog( "elore" );

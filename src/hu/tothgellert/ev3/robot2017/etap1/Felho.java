@@ -9,6 +9,8 @@ public class Felho extends AbsztraktEtap {
 
 	@Override
 	public void run() {
+		allapotKiiras();
+
 		hatraIndul();
 		kartBehuz();
 		varAmigMozog( "hatra" );

@@ -1,5 +1,7 @@
 package hu.tothgellert.ev3.kozos.billentyu;
 
+import lejos.hardware.Button;
+
 public class BillentyuEsemeny {
 
 	private int billentyuLenyomva;
@@ -12,4 +14,7 @@ public class BillentyuEsemeny {
 		return billentyuLenyomva;
 	}
 
+	public boolean escapeLenyomva() {
+		return (billentyuLenyomva & Button.ID_ESCAPE) != 0;
+	}
 }

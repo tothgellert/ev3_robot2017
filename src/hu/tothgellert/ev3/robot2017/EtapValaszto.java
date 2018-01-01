@@ -29,6 +29,10 @@ public class EtapValaszto {
 				valasztottEtap = 3;
 				break;
 			}
+			if ( (lenyomottGombok & Button.ID_DOWN) != 0 ) {
+				valasztottEtap = 4;
+				break;
+			}
 			if ( (lenyomottGombok & Button.ID_ESCAPE) != 0 ) {
 				kilepes = true;
 				break;

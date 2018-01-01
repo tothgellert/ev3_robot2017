@@ -9,6 +9,8 @@ public class Etap1 extends AbsztraktEtap {
 
 	@Override
 	public void run() {
+		etapKiiras();
+
 		GurigaEsBehuz gurigaEsBehuz = new GurigaEsBehuz( this );
 		Felho felho = new Felho( this );
 		Kontener kontener = new Kontener( this );

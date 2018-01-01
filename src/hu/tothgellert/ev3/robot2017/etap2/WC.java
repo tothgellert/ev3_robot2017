@@ -10,6 +10,8 @@ public class WC extends AbsztraktEtap {
 
 	@Override
 	public void run() {
+		allapotKiiras();
+
 		arcBalraElore( 190, 45, false );
 		arcJobbraElore( 190, 45, false );
 		travel( 495 );

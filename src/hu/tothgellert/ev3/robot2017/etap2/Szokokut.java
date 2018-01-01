@@ -10,6 +10,8 @@ public class Szokokut extends AbsztraktEtap {
 
 	@Override
 	public void run() {
+		allapotKiiras();
+
 		travel( -20 );
 		travel( 615 );
 		setLinearSpeed( 700 );

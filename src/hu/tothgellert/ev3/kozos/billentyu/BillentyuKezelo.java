@@ -26,7 +26,7 @@ public class BillentyuKezelo {
 
 		private void esemenytElkuld( int billentyuLenyomva ) {
 			BillentyuEsemeny esemeny = new BillentyuEsemeny( billentyuLenyomva );
-			figyelo.billentyuLenyomva( esemeny );
+			figyelo.billentyuLenyomasKezelese( esemeny );
 		}
 	}
 

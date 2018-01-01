@@ -1,19 +1,15 @@
 package hu.tothgellert.ev3.robot2017;
 
 import hu.tothgellert.ev3.kozos.billentyu.BillentyuSzin;
-import hu.tothgellert.ev3.kozos.etap.EtapMegszakitvaException;
+import hu.tothgellert.ev3.kozos.etap.MegszakithatoEtap;
 import lejos.hardware.Button;
-import lejos.hardware.lcd.LCD;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 
-public abstract class AbsztraktEtap implements Runnable {
+public abstract class AbsztraktEtap extends MegszakithatoEtap implements Runnable {
 	public static final int ALAP_SEBESSEG = 120;
-
-	protected static boolean etapMegszakitva;
-	private static Thread futtatoSzal;
 
 	protected RegulatedMotor motorBal;
 	protected RegulatedMotor motorJobb;
@@ -38,17 +34,27 @@ public abstract class AbsztraktEtap implements Runnable {
 		this.robot = szuloEtap.robot;
 	}
 
+	protected void etapKiiras() {
+		Kijelzo.etapUzenet( getClass().getSimpleName() + " fut" );
+	}
+
+	protected void allapotKiiras() {
+		Kijelzo.allapotUzenet( getClass().getSimpleName() );
+	}
+
 	protected void varAmigMozog( String uzenet ) {
 		etapMegszakitasEllenorzese();
-		allapotUzenet( uzenet );
+		Kijelzo.allapotUzenet( uzenet );
 		while ( pilot.isMoving() ) {
 			Thread.yield();
+			etapMegszakitasEllenorzese();
 		}
 	}
 
 	protected void var( int millis ) {
 		etapMegszakitasEllenorzese();
 		Delay.msDelay( millis );
+		etapMegszakitasEllenorzese();
 	}
 
 	protected int fordulat( double korFordulat ) {
@@ -57,14 +63,8 @@ public abstract class AbsztraktEtap implements Runnable {
 
 	protected void var( int millis, String uzenet ) {
 		etapMegszakitasEllenorzese();
-		allapotUzenet( uzenet );
+		Kijelzo.allapotUzenet( uzenet );
 		var( millis );
-	}
-
-	protected void allapotUzenet( String uzenet ) {
-		LCD.clear( 6 );
-		LCD.drawString( uzenet, 0, 6 );
-		LCD.asyncRefresh();
 	}
 
 	protected void stop() {
@@ -74,9 +74,17 @@ public abstract class AbsztraktEtap implements Runnable {
 		Button.LEDPattern( BillentyuSzin.KIKAPCSOLVA );
 	}
 
+	protected void arcJobbraElore( double radius, double angle ) {
+		arcJobbraElore( radius, angle, false );
+	}
+
 	protected void arcJobbraElore( double radius, double angle, boolean immedateReturn ) {
 		etapMegszakitasEllenorzese();
 		pilot.arc( radius, angle, immedateReturn );
+	}
+
+	protected void arcJobbraHatra( double radius, double angle ) {
+		arcJobbraHatra( radius, angle, false );
 	}
 
 	protected void arcJobbraHatra( double radius, double angle, boolean immedateReturn ) {
@@ -84,9 +92,17 @@ public abstract class AbsztraktEtap implements Runnable {
 		pilot.arc( radius, -angle, immedateReturn );
 	}
 
+	protected void arcBalraElore( double radius, double angle ) {
+		arcBalraElore( radius, angle, false );
+	}
+
 	protected void arcBalraElore( double radius, double angle, boolean immedateReturn ) {
 		etapMegszakitasEllenorzese();
 		pilot.arc( -radius, angle, immedateReturn );
+	}
+
+	protected void arcBalraHatra( double radius, double angle ) {
+		arcBalraHatra( radius, angle, false );
 	}
 
 	protected void arcBalraHatra( double radius, double angle, boolean immedateReturn ) {
@@ -118,36 +134,8 @@ public abstract class AbsztraktEtap implements Runnable {
 		pilot.setLinearSpeed( speed );
 	}
 
-	private void etapMegszakitasEllenorzese() {
-		if ( etapMegszakitva ) {
-			stop();
-			LCD.clear( 8 );
-			LCD.drawString( "megszakitva", 0, 8 );
-			// EtapFuttato.etapUzenet( "megszakitva" );
-			LCD.asyncRefresh();
-			throw new EtapMegszakitvaException();
-		}
-	}
-
 	protected void setPilot( MovePilot pilot ) {
 		this.pilot = pilot;
 	}
 
-	public static void etapMegszakitva() {
-		LCD.drawString( "megszakitva", 0, 8 );
-		LCD.asyncRefresh();
-		etapMegszakitva = true;
-		futtatoSzal.interrupt();
-	}
-
-	public static void etapInditas() {
-		LCD.clear( 8 );
-		etapMegszakitva = false;
-		futtatoSzal = Thread.currentThread();
-		szalMegszakitottAllapotanakTorlese();
-	}
-
-	private static void szalMegszakitottAllapotanakTorlese() {
-		Thread.interrupted();
-	}
 }

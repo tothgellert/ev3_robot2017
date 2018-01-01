@@ -10,6 +10,8 @@ public class Etap2 extends AbsztraktEtap {
 
 	@Override
 	public void run() {
+		etapKiiras();
+
 		Szokokut szokokut = new Szokokut( this );
 		WC Wc = new WC( this );
 
