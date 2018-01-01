@@ -4,7 +4,7 @@ public class BillentyuEsemeny {
 
 	private int billentyuLenyomva;
 
-	public BillentyuEsemeny(int billentyuLenyomva) {
+	public BillentyuEsemeny( int billentyuLenyomva ) {
 		this.billentyuLenyomva = billentyuLenyomva;
 	}
 

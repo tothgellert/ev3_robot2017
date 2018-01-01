@@ -10,34 +10,34 @@ public class BillentyuKezelo {
 	private static class BillentyuKezeloThread extends Thread {
 		public BillentyuKezeloThread() {
 			super();
-			setName("BillentyuKezelo");
-			setDaemon(true);
+			setName( "BillentyuKezelo" );
+			setDaemon( true );
 		}
 
 		@Override
 		public void run() {
-			while (true) {
+			while ( true ) {
 				int billentyuLenyomva = Button.waitForAnyPress();
-				if (figyelo != null) {
-					esemenytElkuld(billentyuLenyomva);
+				if ( figyelo != null ) {
+					esemenytElkuld( billentyuLenyomva );
 				}
 			}
 		}
 
-		private void esemenytElkuld(int billentyuLenyomva) {
-			BillentyuEsemeny esemeny = new BillentyuEsemeny(billentyuLenyomva);
-			figyelo.billentyuLenyomva(esemeny);
+		private void esemenytElkuld( int billentyuLenyomva ) {
+			BillentyuEsemeny esemeny = new BillentyuEsemeny( billentyuLenyomva );
+			figyelo.billentyuLenyomva( esemeny );
 		}
 	}
 
 	public static synchronized void inditHaMegNemFut() {
-		if (szal == null) {
+		if ( szal == null ) {
 			szal = new BillentyuKezeloThread();
 			szal.start();
 		}
 	}
 
-	public static void figyelotHozzaad(BillentyuEsemenyFigyelo listener) {
+	public static void figyelotHozzaad( BillentyuEsemenyFigyelo listener ) {
 		inditHaMegNemFut();
 		BillentyuKezelo.figyelo = listener;
 
@@ -48,7 +48,7 @@ public class BillentyuKezelo {
 	}
 
 	public static void varAmigEscapetElenged() {
-		while ((Button.getButtons() & Button.ID_ESCAPE) != 0) {
+		while ( (Button.getButtons() & Button.ID_ESCAPE) != 0 ) {
 			Thread.yield();
 		}
 	}
@@ -57,11 +57,11 @@ public class BillentyuKezelo {
 		inditHaMegNemFut();
 		try {
 			figyelo = esemenyreVaroFigyelo;
-			synchronized (esemenyreVaroFigyelo) {
+			synchronized ( esemenyreVaroFigyelo ) {
 				try {
 					esemenyreVaroFigyelo.wait();
-				} catch (InterruptedException e) {
-					return new BillentyuEsemeny(0);
+				} catch ( InterruptedException e ) {
+					return new BillentyuEsemeny( 0 );
 				}
 			}
 			return esemenyreVaroFigyelo.getEsemeny();

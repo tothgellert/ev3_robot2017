@@ -3,14 +3,15 @@ package hu.tothgellert.ev3.robot2017.etap1;
 import hu.tothgellert.ev3.robot2017.AbsztraktEtap;
 
 public class Etap1 extends AbsztraktEtap {
-	public Etap1(AbsztraktEtap szuloEtap) {
-		super(szuloEtap);
+	public Etap1( AbsztraktEtap szuloEtap ) {
+		super( szuloEtap );
 	}
 
+	@Override
 	public void run() {
-		GurigaEsBehuz gurigaEsBehuz = new GurigaEsBehuz(this);
-		Felho felho = new Felho(this);
-		Kontener kontener = new Kontener(this);
+		GurigaEsBehuz gurigaEsBehuz = new GurigaEsBehuz( this );
+		Felho felho = new Felho( this );
+		Kontener kontener = new Kontener( this );
 
 		egyenesbeAll();
 		gurigaEsBehuz.run();
@@ -19,6 +20,6 @@ public class Etap1 extends AbsztraktEtap {
 	}
 
 	private void egyenesbeAll() {
-		travel(-20);
+		travel( -20 );
 	}
 }

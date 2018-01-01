@@ -5,9 +5,9 @@ public class BillentyuEsemenyreVaroFigyelo implements BillentyuEsemenyFigyelo {
 	private BillentyuEsemeny esemeny;
 
 	@Override
-	public void billentyuLenyomva(BillentyuEsemeny esemeny) {
+	public void billentyuLenyomva( BillentyuEsemeny esemeny ) {
 		this.esemeny = esemeny;
-		synchronized (this) {
+		synchronized ( this ) {
 			esemeny.notifyAll();
 		}
 	}
