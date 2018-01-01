@@ -17,7 +17,7 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 			tenylegesFuttatas(etap);
 			lezar();
 		} finally {
-			BillentyuKezelo.removeListener();
+			BillentyuKezelo.figyelotElvesz();
 		}
 	}
 
@@ -34,7 +34,7 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 	}
 
 	private void elokeszit(Runnable etap) {
-		BillentyuKezelo.addListener(this);
+		BillentyuKezelo.figyelotHozzaad(this);
 		AbsztraktEtap.etapInditas();
 		AbsztraktEtap.etapUzenet(etap.getClass().getSimpleName());
 		Button.LEDPattern(3);

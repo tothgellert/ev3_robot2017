@@ -1,6 +1,6 @@
 package hu.tothgellert.ev3.kozos.billentyu;
 
-public class EsemenyreVaroFigyelo implements BillentyuEsemenyFigyelo {
+public class BillentyuEsemenyreVaroFigyelo implements BillentyuEsemenyFigyelo {
 
 	private BillentyuEsemeny esemeny;
 
