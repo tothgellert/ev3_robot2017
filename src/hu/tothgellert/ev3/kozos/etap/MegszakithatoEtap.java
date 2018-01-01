@@ -18,17 +18,22 @@ public abstract class MegszakithatoEtap {
 	}
 
 	protected void etapMegszakitasEllenorzese() {
-		if ( etapMegszakitva || Thread.interrupted() ) {
+		boolean szalMegszakitva = Thread.interrupted();
+		LCD.drawChar( etapMegszakitva ? '1' : '0', 0, Kijelzo.SOR_5 );
+		LCD.drawChar( szalMegszakitva ? '1' : '0', 1, Kijelzo.SOR_5 );
+		LCD.refresh();
+		if ( etapMegszakitva || szalMegszakitva ) {
+			Sound.beepSequenceUp();
 			etapMegszakitasa();
 		}
 	}
 
 	public static void etapMegszakitasKerese() {
-		Sound.twoBeeps();
+		Sound.beepSequence();
 		LCD.drawString( "megszakitaskeres", 0, Kijelzo.SOR_DEBUG );
 		LCD.asyncRefresh();
 		etapMegszakitva = true;
-		futtatoSzal.interrupt();
+		//futtatoSzal.interrupt();
 	}
 
 	public static void etapInditas() {

@@ -50,6 +50,7 @@ public class Foprogram extends AbsztraktEtap {
 			return false;
 		}
 
+		letrehozUjPilotot();
 		AbsztraktEtap etap;
 		switch ( etapValaszto.getValasztottEtap() ) {
 			case 1:
@@ -86,19 +87,17 @@ public class Foprogram extends AbsztraktEtap {
 		// motorBal.synchronizeWith( new RegulatedMotor[] { motorJobb } );
 
 		Wheel kerekBal = WheeledChassis.modelWheel( motorBal, 43.2 ).offset( -65.0 );
-		// etap1: Wheel kerekJobb = WheeledChassis.modelWheel(motorJobb,
-		// 42.88).offset(65.0);
+		// etap1: Wheel kerekJobb = WheeledChassis.modelWheel(motorJobb, 42.88).offset(65.0);
 		Wheel kerekJobb = WheeledChassis.modelWheel( motorJobb, 42.89 ).offset( 65.0 );
 
 		robot = new WheeledChassis( new Wheel[] { kerekBal, kerekJobb }, WheeledChassis.TYPE_DIFFERENTIAL );
-		setPilot( letrehozPilot() );
 	}
 
-	private MovePilot letrehozPilot() {
+	private void letrehozUjPilotot() {
 		MovePilot pilot = new MovePilot( robot );
 		pilot.setLinearSpeed( ALAP_SEBESSEG ); // mm per second
 		pilot.setAngularSpeed( 50 ); // mm per second
-		return pilot;
+		setPilot( pilot );
 	}
 
 }

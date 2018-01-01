@@ -13,10 +13,10 @@ public class Etap2 extends AbsztraktEtap {
 		etapKiiras();
 
 		Szokokut szokokut = new Szokokut( this );
-		WC Wc = new WC( this );
+		WC wc = new WC( this );
 
-		szokokut.run();
-		Wc.run();
+		szokokut.indit();
+		wc.indit();
 	}
 
 }

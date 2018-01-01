@@ -16,9 +16,9 @@ public class Etap1 extends AbsztraktEtap {
 		Kontener kontener = new Kontener( this );
 
 		egyenesbeAll();
-		gurigaEsBehuz.run();
-		felho.run();
-		kontener.run();
+		gurigaEsBehuz.indit();
+		felho.indit();
+		kontener.indit();
 	}
 
 	private void egyenesbeAll() {

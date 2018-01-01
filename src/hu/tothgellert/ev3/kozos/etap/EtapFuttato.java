@@ -15,7 +15,7 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 	public EtapFuttato() {
 	}
 
-	public void futtat( Runnable etap ) {
+	public void futtat( AbsztraktEtap etap ) {
 		try {
 			BillentyuKezelo.figyelotHozzaad( this );
 			elokeszit( etap );
@@ -26,9 +26,9 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 		}
 	}
 
-	private void tenylegesFuttatas( Runnable etap ) {
+	private void tenylegesFuttatas( AbsztraktEtap etap ) {
 		try {
-			etap.run();
+			etap.indit();
 		} catch ( EtapMegszakitvaException e ) {
 		} finally {
 		}
@@ -39,7 +39,7 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 		LCD.refresh();
 	}
 
-	private void elokeszit( Runnable etap ) {
+	private void elokeszit( AbsztraktEtap etap ) {
 		Sound.beep();
 		AbsztraktEtap.etapInditas();
 		Button.LEDPattern( BillentyuSzin.SARGA_NORMAL );

@@ -8,15 +8,17 @@ import lejos.robotics.chassis.Chassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 
-public abstract class AbsztraktEtap extends MegszakithatoEtap implements Runnable {
+public abstract class AbsztraktEtap extends MegszakithatoEtap {
 	public static final int ALAP_SEBESSEG = 120;
 
+	protected Chassis robot;
 	protected RegulatedMotor motorBal;
 	protected RegulatedMotor motorJobb;
-	protected Chassis robot;
 	protected RegulatedMotor motorElsoKar;
 	protected RegulatedMotor motorHatsoKar;
 	private MovePilot pilot;
+
+	protected abstract void run();
 
 	public AbsztraktEtap( AbsztraktEtap szuloEtap ) {
 		if ( szuloEtap == null ) {
@@ -32,6 +34,15 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap implements Runnabl
 		this.motorHatsoKar = szuloEtap.motorHatsoKar;
 		this.pilot = szuloEtap.pilot;
 		this.robot = szuloEtap.robot;
+	}
+
+	protected void setPilot( MovePilot pilot ) {
+		this.pilot = pilot;
+	}
+
+	public void indit() {
+		Thread.interrupted();
+		run();
 	}
 
 	protected void etapKiiras() {
@@ -67,6 +78,7 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap implements Runnabl
 		var( millis );
 	}
 
+	@Override
 	protected void stop() {
 		pilot.stop();
 		motorElsoKar.stop();
@@ -133,9 +145,4 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap implements Runnabl
 	public void setLinearSpeed( double speed ) {
 		pilot.setLinearSpeed( speed );
 	}
-
-	protected void setPilot( MovePilot pilot ) {
-		this.pilot = pilot;
-	}
-
 }
