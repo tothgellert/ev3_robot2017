@@ -8,7 +8,7 @@ public class BillentyuEsemenyreVaroFigyelo implements BillentyuEsemenyFigyelo {
 	public void billentyuLenyomva( BillentyuEsemeny esemeny ) {
 		this.esemeny = esemeny;
 		synchronized ( this ) {
-			esemeny.notifyAll();
+			this.notifyAll();
 		}
 	}
 
