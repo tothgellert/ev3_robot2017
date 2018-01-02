@@ -1,8 +1,7 @@
 package hu.tothgellert.ev3.robot2017;
 
-import hu.tothgellert.ev3.kozos.billentyu.BillentyuSzin;
 import hu.tothgellert.ev3.kozos.etap.MegszakithatoEtap;
-import lejos.hardware.Button;
+import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.navigation.MovePilot;
@@ -11,11 +10,18 @@ import lejos.utility.Delay;
 public abstract class AbsztraktEtap extends MegszakithatoEtap {
 	public static final int ALAP_SEBESSEG = 120;
 
+	/*
+	 * FONTOS!!!!!
+	 * 
+	 *  Ha felveszel új mezõt, akkor az adatokatMasol() metódusba is tedd be!!! 
+	 */
 	protected Chassis robot;
 	protected RegulatedMotor motorBal;
 	protected RegulatedMotor motorJobb;
 	protected RegulatedMotor motorElsoKar;
 	protected RegulatedMotor motorHatsoKar;
+	protected EV3ColorSensor szinSzenzorBal;
+	protected EV3ColorSensor szinSzenzorJobb;
 	private MovePilot pilot;
 
 	protected abstract void run();
@@ -34,6 +40,8 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap {
 		this.motorHatsoKar = szuloEtap.motorHatsoKar;
 		this.pilot = szuloEtap.pilot;
 		this.robot = szuloEtap.robot;
+		this.szinSzenzorBal = szuloEtap.szinSzenzorBal;
+		this.szinSzenzorJobb = szuloEtap.szinSzenzorJobb;
 	}
 
 	protected void setPilot( MovePilot pilot ) {
@@ -49,13 +57,17 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap {
 		Kijelzo.etapUzenet( getClass().getSimpleName() + " fut" );
 	}
 
-	protected void allapotKiiras() {
-		Kijelzo.allapotUzenet( getClass().getSimpleName() );
+	protected void szakaszKiiras() {
+		Kijelzo.szakaszUzenet( getClass().getSimpleName() );
+	}
+
+	protected void muveletKiiras( String muvelet ) {
+		Kijelzo.muveletUzenet( muvelet );
 	}
 
 	protected void varAmigMozog( String uzenet ) {
 		etapMegszakitasEllenorzese();
-		Kijelzo.allapotUzenet( uzenet );
+		Kijelzo.szakaszUzenet( uzenet );
 		while ( pilot.isMoving() ) {
 			Thread.yield();
 			etapMegszakitasEllenorzese();
@@ -74,7 +86,7 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap {
 
 	protected void var( int millis, String uzenet ) {
 		etapMegszakitasEllenorzese();
-		Kijelzo.allapotUzenet( uzenet );
+		Kijelzo.szakaszUzenet( uzenet );
 		var( millis );
 	}
 
@@ -83,7 +95,6 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap {
 		pilot.stop();
 		motorElsoKar.stop();
 		motorHatsoKar.stop();
-		Button.LEDPattern( BillentyuSzin.KIKAPCSOLVA );
 	}
 
 	protected void arcJobbraElore( double radius, double angle ) {
@@ -144,5 +155,25 @@ public abstract class AbsztraktEtap extends MegszakithatoEtap {
 
 	public void setLinearSpeed( double speed ) {
 		pilot.setLinearSpeed( speed );
+	}
+
+	public void setAngularSpeed( double speed ) {
+		pilot.setAngularSpeed( speed );
+	}
+
+	public double setLinearAcceleration( double acceleration ) {
+		double elozo = pilot.getLinearAcceleration();
+		pilot.setLinearAcceleration( acceleration );
+		return elozo;
+	}
+
+	public double setAngularAcceleration( double acceleration ) {
+		double elozo = pilot.getAngularAcceleration();
+		pilot.setAngularAcceleration( acceleration );
+		return elozo;
+	}
+
+	public boolean pilotMozog() {
+		return pilot.isMoving();
 	}
 }

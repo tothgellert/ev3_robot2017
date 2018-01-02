@@ -12,15 +12,15 @@ public abstract class MegszakithatoEtap {
 
 	private void etapMegszakitasa() {
 		stop();
-		LCD.drawString( "megszakitva", 0, Kijelzo.SOR_DEBUG );
+		Kijelzo.debug( "megszakitva" );
 		LCD.asyncRefresh();
 		throw new EtapMegszakitvaException();
 	}
 
 	protected void etapMegszakitasEllenorzese() {
 		boolean szalMegszakitva = Thread.interrupted();
-		LCD.drawChar( etapMegszakitva ? '1' : '0', 0, Kijelzo.SOR_5 );
-		LCD.drawChar( szalMegszakitva ? '1' : '0', 1, Kijelzo.SOR_5 );
+		LCD.drawChar( etapMegszakitva ? '1' : '0', 0, Kijelzo.SOR_SZENZOR );
+		LCD.drawChar( szalMegszakitva ? '1' : '0', 1, Kijelzo.SOR_SZENZOR );
 		LCD.refresh();
 		if ( etapMegszakitva || szalMegszakitva ) {
 			Sound.beepSequenceUp();
@@ -30,7 +30,7 @@ public abstract class MegszakithatoEtap {
 
 	public static void etapMegszakitasKerese() {
 		Sound.beepSequence();
-		LCD.drawString( "megszakitaskeres", 0, Kijelzo.SOR_DEBUG );
+		Kijelzo.debug( "megszakitaskeres" );
 		LCD.asyncRefresh();
 		etapMegszakitva = true;
 		//futtatoSzal.interrupt();

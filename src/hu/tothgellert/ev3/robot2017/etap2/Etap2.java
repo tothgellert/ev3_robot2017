@@ -20,9 +20,11 @@ public class Etap2 extends FoEtap {
 
 		Szokokut szokokut = new Szokokut( this );
 		WC wc = new WC( this );
+		Virag virag = new Virag( this );
 
 		szokokut.indit();
 		wc.indit();
+		virag.indit();
 	}
 
 }

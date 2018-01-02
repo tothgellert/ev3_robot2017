@@ -9,7 +9,7 @@ class Kontener extends AbsztraktEtap {
 
 	@Override
 	public void run() {
-		allapotKiiras();
+		szakaszKiiras();
 
 		eloremegy();
 		befordul();

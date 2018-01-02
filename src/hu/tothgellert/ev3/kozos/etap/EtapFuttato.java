@@ -4,7 +4,7 @@ import hu.tothgellert.ev3.kozos.billentyu.BillentyuEsemeny;
 import hu.tothgellert.ev3.kozos.billentyu.BillentyuEsemenyFigyelo;
 import hu.tothgellert.ev3.kozos.billentyu.BillentyuKezelo;
 import hu.tothgellert.ev3.kozos.billentyu.BillentyuSzin;
-import hu.tothgellert.ev3.robot2017.AbsztraktEtap;
+import hu.tothgellert.ev3.robot2017.FoEtap;
 import hu.tothgellert.ev3.robot2017.Kijelzo;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.Button;
@@ -15,18 +15,21 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 	public EtapFuttato() {
 	}
 
-	public void futtat( AbsztraktEtap etap ) {
+	public void futtat( FoEtap etap ) {
 		try {
 			BillentyuKezelo.figyelotHozzaad( this );
 			elokeszit( etap );
 			tenylegesFuttatas( etap );
 			befejez();
+		} catch ( Throwable e ) {
+			Sound.beepSequence();
+			e.printStackTrace();
 		} finally {
 			BillentyuKezelo.figyelotElvesz();
 		}
 	}
 
-	private void tenylegesFuttatas( AbsztraktEtap etap ) {
+	private void tenylegesFuttatas( FoEtap etap ) {
 		try {
 			etap.indit();
 		} catch ( EtapMegszakitvaException e ) {
@@ -35,13 +38,12 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 	}
 
 	private void befejez() {
-		LCD.clear( 5 );
-		LCD.refresh();
+		Kijelzo.etapUzenet( "" );
 	}
 
-	private void elokeszit( AbsztraktEtap etap ) {
+	private void elokeszit( FoEtap etap ) {
 		Sound.beep();
-		AbsztraktEtap.etapInditas();
+		FoEtap.etapInditas();
 		Button.LEDPattern( BillentyuSzin.SARGA_NORMAL );
 	}
 
@@ -49,7 +51,7 @@ public class EtapFuttato implements BillentyuEsemenyFigyelo {
 	public void billentyuLenyomasKezelese( BillentyuEsemeny esemeny ) {
 		//billentyuEsemenytKiir( esemeny );
 		if ( esemeny.escapeLenyomva() ) {
-			AbsztraktEtap.etapMegszakitasKerese();
+			FoEtap.etapMegszakitasKerese();
 		}
 	}
 

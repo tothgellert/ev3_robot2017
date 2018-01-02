@@ -10,7 +10,7 @@ public class Szokokut extends AbsztraktEtap {
 
 	@Override
 	public void run() {
-		allapotKiiras();
+		szakaszKiiras();
 
 		travel( -20 );
 		travel( 615 );

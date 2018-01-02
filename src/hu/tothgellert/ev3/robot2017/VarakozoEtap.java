@@ -1,12 +1,11 @@
-package hu.tothgellert.ev3.kozos.etap;
+package hu.tothgellert.ev3.robot2017;
 
-import hu.tothgellert.ev3.robot2017.AbsztraktEtap;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
 
-public class TesztEtap extends AbsztraktEtap {
+public class VarakozoEtap extends AbsztraktEtap {
 
-	public TesztEtap( AbsztraktEtap szuloEtap ) {
+	public VarakozoEtap( AbsztraktEtap szuloEtap ) {
 		super( szuloEtap );
 	}
 

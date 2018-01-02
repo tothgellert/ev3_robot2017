@@ -10,18 +10,34 @@ public class WC extends AbsztraktEtap {
 
 	@Override
 	public void run() {
-		allapotKiiras();
+		szakaszKiiras();
 
-		arcBalraElore( 186, 45, false );
-		arcJobbraElore( 186.8, 44, false );
-		travel( 485 );
-		setLinearSpeed( 400 );
-		motorElsoKar.rotate( fordulat( 0.5 ) );
-		setLinearSpeed( ALAP_SEBESSEG );
+		rafordul();
+		utazik();
+		lehuzzaAWct();
+		varAmigLefolyik();
+		kartFelhuz();
+	}
+
+	private void kartFelhuz() {
 		motorElsoKar.rotate( fordulat( -0.45 ) );
-		var( 2000 );
-		rotate( 16 );
+	}
 
+	private void rafordul() {
+		arcBalraElore( 186.5, 45, false );
+		arcJobbraElore( 186.2, 44, false );
+	}
+
+	private void utazik() {
+		travel( 485 );
+	}
+
+	private void lehuzzaAWct() {
+		motorElsoKar.rotate( fordulat( 0.5 ) );
+	}
+
+	private void varAmigLefolyik() {
+		var( 2000 );
 	}
 
 }
