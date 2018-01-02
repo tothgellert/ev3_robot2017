@@ -27,7 +27,7 @@ class GurigaEsBehuz extends AbsztraktEtap {
 
 	private void lassanBetol() {
 		setLinearSpeed( 80 );
-		travel( 160 );
+		travel( 150 );
 	}
 
 	private void varMigLeesikAViz() {
@@ -35,7 +35,7 @@ class GurigaEsBehuz extends AbsztraktEtap {
 	}
 
 	private void vezeteketBehuz() {
-		motorElsoKar.rotate( fordulat( -1.2 ) );
+		motorElsoKar.rotate( fordulat( -1.1 ) );
 	}
 
 	private void falnakNyom() {

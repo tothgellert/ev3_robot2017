@@ -15,9 +15,9 @@ public class Szokokut extends AbsztraktEtap {
 		travel( -20 );
 		travel( 615 );
 		setLinearSpeed( 700 );
-		motorElsoKar.rotate( fordulat( -0.45 ) );
+		motorElsoKar.rotate( fordulat( -0.4 ) );
 		var( 250 );
 		setLinearSpeed( ALAP_SEBESSEG );
-		rotate( 5 );
+		rotate( 2 );
 	}
 }

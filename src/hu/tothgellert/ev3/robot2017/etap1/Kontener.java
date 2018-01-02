@@ -27,11 +27,11 @@ class Kontener extends AbsztraktEtap {
 	}
 
 	private void eloremegy() {
-		travel( 235 );
+		travel( 225 );
 	}
 
 	private void befordul() {
-		rotate( 118 );
+		rotate( 117 );
 	}
 
 	private void tolatEsKitol() {

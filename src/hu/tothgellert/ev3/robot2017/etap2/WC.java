@@ -12,12 +12,16 @@ public class WC extends AbsztraktEtap {
 	public void run() {
 		allapotKiiras();
 
-		arcBalraElore( 190, 45, false );
-		arcJobbraElore( 190, 45, false );
-		travel( 495 );
+		arcBalraElore( 186, 45, false );
+		arcJobbraElore( 186.8, 44, false );
+		travel( 485 );
 		setLinearSpeed( 400 );
-		motorElsoKar.rotate( fordulat( 0.45 ) );
+		motorElsoKar.rotate( fordulat( 0.5 ) );
 		setLinearSpeed( ALAP_SEBESSEG );
+		motorElsoKar.rotate( fordulat( -0.45 ) );
+		var( 2000 );
+		rotate( 16 );
+
 	}
 
 }

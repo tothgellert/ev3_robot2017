@@ -7,11 +7,6 @@ import hu.tothgellert.ev3.robot2017.etap1.Etap1;
 import hu.tothgellert.ev3.robot2017.etap2.Etap2;
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.MotorPort;
-import lejos.robotics.chassis.Wheel;
-import lejos.robotics.chassis.WheeledChassis;
-import lejos.robotics.navigation.MovePilot;
 
 public class Foprogram extends AbsztraktEtap {
 
@@ -26,7 +21,6 @@ public class Foprogram extends AbsztraktEtap {
 	@Override
 	public void run() {
 		kezdoKepernyo();
-		inicializalas();
 		while ( etapValasztasEsFuttatas() ) {
 		}
 		Sound.beep();
@@ -50,7 +44,6 @@ public class Foprogram extends AbsztraktEtap {
 			return false;
 		}
 
-		letrehozUjPilotot();
 		AbsztraktEtap etap;
 		switch ( etapValaszto.getValasztottEtap() ) {
 			case 1:
@@ -75,29 +68,6 @@ public class Foprogram extends AbsztraktEtap {
 
 	private void etapotFuttat( AbsztraktEtap etap ) {
 		new EtapFuttato().futtat( etap );
-	}
-
-	private void inicializalas() {
-		motorHatsoKar = new EV3LargeRegulatedMotor( MotorPort.A );
-		motorBal = new EV3LargeRegulatedMotor( MotorPort.B );
-		motorBal.resetTachoCount();
-		motorJobb = new EV3LargeRegulatedMotor( MotorPort.C );
-		motorJobb.resetTachoCount();
-		motorElsoKar = new EV3LargeRegulatedMotor( MotorPort.D );
-		// motorBal.synchronizeWith( new RegulatedMotor[] { motorJobb } );
-
-		Wheel kerekBal = WheeledChassis.modelWheel( motorBal, 43.2 ).offset( -65.0 );
-		// etap1: Wheel kerekJobb = WheeledChassis.modelWheel(motorJobb, 42.88).offset(65.0);
-		Wheel kerekJobb = WheeledChassis.modelWheel( motorJobb, 42.89 ).offset( 65.0 );
-
-		robot = new WheeledChassis( new Wheel[] { kerekBal, kerekJobb }, WheeledChassis.TYPE_DIFFERENTIAL );
-	}
-
-	private void letrehozUjPilotot() {
-		MovePilot pilot = new MovePilot( robot );
-		pilot.setLinearSpeed( ALAP_SEBESSEG ); // mm per second
-		pilot.setAngularSpeed( 50 ); // mm per second
-		setPilot( pilot );
 	}
 
 }
